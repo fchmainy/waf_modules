@@ -85,7 +85,7 @@ Then, call the **multiple_waf_policies** module. Don't forget the explicit depen
 
 ```terraform
 module "consolidated_vips" {
-  source = "../modules/multiple_waf_policies"
+  source = "github.com/fchmainy/waf_modules"
   providers = {
     bigip = bigip.prod
   }
