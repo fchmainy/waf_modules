@@ -1,6 +1,12 @@
 # Consolidate Multiple WAF Policies on a single Virtual Server
 
+
+
+
 ## Goals
+The goal is to create rules so we can, on a single HTTP/HTTPS listener, select a different WAAP Policy based on a specific selector. The selector being: an FQDN, a path, a cookie, a header...
+
+
 
 
 ## Why it matters?
@@ -12,8 +18,14 @@ For example, you may want to have, on a listener (on a best match):
 - if the URI path starts with any of ["/restricted", "/admin", "/hr"], then use the policy **restricted**
 - and default to **default** the WAF Policy
 
+
+
+
 ## Explain the Nuts & Bolts
 Behind the scene, the module implements the **"bigip_ltm_policy"** terraform resource. We just added some magic and glitters to make it more human readable. 
+
+
+
 
 ## Example in Terraform
 
