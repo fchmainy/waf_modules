@@ -1,13 +1,12 @@
 # Consolidate Multiple WAF Policies on a single Virtual Server
 
 
-
+</br></br></br>
 
 ## Goals
 The goal is to create rules so we can, on a single HTTP/HTTPS listener, select a different WAAP Policy based on a specific selector. The selector being: an FQDN, a path, a cookie, a header...
 
-
-
+</br></br></br>
 
 ## Why it matters?
 For some Public Cloud environments, you may be limit in the number of secondary IP addresses per Network Interface depending on your instance size. In this case, you may want to share a single IP address with multiple applications and therefore configure specific selectors to use the right WAF Policy.
@@ -18,14 +17,14 @@ For example, you may want to have, on a listener (on a best match):
 - if the URI path starts with any of ["/restricted", "/admin", "/hr"], then use the policy **restricted**
 - and default to **default** the WAF Policy
 
-
+</br></br></br>
 
 
 ## Explain the Nuts & Bolts
 Behind the scene, the module implements the **"bigip_ltm_policy"** terraform resource. We just added some magic and glitters to make it more human readable. 
 
 
-
+</br></br></br>
 
 ## Example in Terraform
 
@@ -80,12 +79,13 @@ resource "bigip_waf_policy" "default" {
   server_technologies  = ["Apache Tomcat", "MySQL", "Unix/Linux", "MongoDB"]
 }
 ```
-
+</br></br>
 Then, call the **multiple_waf_policies** module. Don't forget the explicit dependency of the module to the WAF Policies:
+
 
 ```terraform
 module "consolidated_vips" {
-  source = "github.com/fchmainy/waf_modules"
+  source = "github.com/fchmainy/waf_modules/multiple_waf_policies"
   providers = {
     bigip = bigip.prod
   }
