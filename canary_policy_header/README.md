@@ -43,7 +43,7 @@ resource "bigip_waf_policy" "app1_waf_v2" {
 
 ```terraform
 module "canary_app1" {
-  source = "github.com/fchmainy/waf_modules/canary_policy_header"
+  source = "github.com/fchmainy/waf_modules/canary_policy_header?ref=v1.0.1"
   providers = {
     bigip = bigip.prod
   }
