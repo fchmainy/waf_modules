@@ -1,10 +1,19 @@
 # Canary Testing of WAF Policies
 
-## Goal
 
 
-# Example
+## Why it matters?
+No matter how intelligent your security gears are, enforcing is always a sensitive operation. Therefore, instead of changing arguments on a policy, you may want to create a new instance of the policy, make the change on it and progressively migrate the users to the new instance.
+</br>
+</br>
+</br>
+## Explain the Nuts & Bolts
+Behind the scene, the module implements the **"bigip_ltm_policy"** terraform resource with some conditions on a header (which could also have been a cookie). 
+</br>
+</br>
+</br>
 
+## Example in Terraform
 
 
 ```terraform
@@ -34,7 +43,7 @@ resource "bigip_waf_policy" "app1_waf_v2" {
 
 ```terraform
 module "canary_app1" {
-  source = "../modules/canary_policy_header"
+  source = "github.com/fchmainy/waf_modules/canary_policy_header"
   providers = {
     bigip = bigip.prod
   }
