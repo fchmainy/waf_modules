@@ -36,4 +36,13 @@ resource "bigip_ltm_policy" "multiple" {
 		}
 	}
     }
+	rule {
+		name				= "default"
+		action	{
+			asm			= true
+			enable			= true
+			policy			= var.default_policy
+			request			= true
+		}
+	}
 }
