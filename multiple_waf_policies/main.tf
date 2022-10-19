@@ -22,6 +22,13 @@ resource "bigip_ltm_policy" "multiple" {
 			values			= rule.value.hostname == null ? rule.value.hostname : rule.value.path
 		}
 		action {
+			forward			= true
+			pool			= var.pool_name
+			request			= true
+			select			= true
+			snat			= automap
+		}
+		action {
 			asm			= true
 			enable			= true
 			request			= true
