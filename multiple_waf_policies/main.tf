@@ -26,7 +26,7 @@ resource "bigip_ltm_policy" "multiple" {
 			pool			= var.pool_name
 			request			= true
 			select			= true
-			snat			= automap
+			snat			= "automap"
 		}
 		action {
 			asm			= true
