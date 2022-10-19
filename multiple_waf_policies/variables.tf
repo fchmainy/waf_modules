@@ -18,7 +18,12 @@ variable rules {
         }))
 }
 
+variable pool_name {
+	type			= string
+	default			= ""
+}
+	
 variable default_policy {
-	    type	= string
-	    default	= ""
+	type			= string
+	default			= ""
 }
