@@ -78,6 +78,31 @@ resource "bigip_waf_policy" "default" {
   enforcement_mode     = "blocking"
   server_technologies  = ["Apache Tomcat", "MySQL", "Unix/Linux", "MongoDB"]
 }
+
+resource "bigip_ltm_pool" "pool1" {
+  provider             = bigip.prod
+  name                = "/Common/pool1"
+  allow_nat           = "yes"
+  allow_snat          = "yes"
+  load_balancing_mode = "round-robin"
+}
+
+resource "bigip_ltm_pool" "pool2" {
+  provider             = bigip.prod
+  name                = "/Common/pool2"
+  allow_nat           = "yes"
+  allow_snat          = "yes"
+  load_balancing_mode = "round-robin"
+}
+
+resource "bigip_ltm_pool" "pool_restricted" {
+  provider             = bigip.prod
+  name                = "/Common/pool_restricted"
+  allow_nat           = "yes"
+  allow_snat          = "yes"
+  load_balancing_mode = "round-robin"
+}
+
 ```
 </br></br>
 Then, call the **multiple_waf_policies** module. Don't forget the explicit dependency of the module to the WAF Policies:
@@ -85,7 +110,7 @@ Then, call the **multiple_waf_policies** module. Don't forget the explicit depen
 
 ```terraform
 module "consolidated_vips" {
-  source = "github.com/fchmainy/waf_modules/multiple_waf_policies?ref=v1.0.1"
+  source = "github.com/fchmainy/waf_modules//multiple_waf_policies?ref=v1.0.2"
   providers = {
     bigip = bigip.prod
   }
@@ -96,16 +121,19 @@ module "consolidated_vips" {
         name            = "WWW1_App"
         hostname        = ["www1.f5demo.com", "app1.f5demo.com"]
         policy          = bigip_waf_policy.app1.name
+	pool_name	= bigip_ltm_pool.pool1.name
     },
     {
         name            = "WWW2_App"
         hostname        = ["www2.f5demo.com"]
         policy          = bigip_waf_policy.app2.name
+	pool_name	= bigip_ltm_pool.pool2.name
     },
     {
         name            = "restricted"
         path            = ["/restricted", "/admin", "/hr"]
         policy          = bigip_waf_policy.restricted.name
+	pool_name	= bigip_ltm_pool.pool_restricted.name
     }]
   default_policy      = bigip_waf_policy.default.name
   depends_on 		= [bigip_waf_policy.app1, bigip_waf_policy.app2, bigip_waf_policy.restricted, bigip_waf_policy.default]
