@@ -15,13 +15,10 @@ variable rules {
                 hostname        = optional(list(string))
                 path            = optional(list(string))
                 policy          = string
+		pool_name	= string
         }))
 }
 
-variable pool_name {
-	type			= string
-	default			= ""
-}
 	
 variable default_policy {
 	type			= string
