@@ -23,7 +23,7 @@ resource "bigip_ltm_policy" "multiple" {
 		}
 		action {
 			forward			= true
-			pool			= var.pool_name
+			pool			= "/${var.partition}/${rule.value.pool_name}"
 			request			= true
 			select			= true
 			snat			= "automap"
