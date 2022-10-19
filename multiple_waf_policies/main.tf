@@ -18,6 +18,7 @@ resource "bigip_ltm_policy" "multiple" {
 			request			= true
 			host			= rule.value.hostname == null ? false : true
 			http_host               = rule.value.hostname == null ? false : true
+                        http_uri                = rule.value.path == null ? false : true
 			path 			= rule.value.path == null ? false : true
 			values			= rule.value.hostname == null ? rule.value.hostname : rule.value.path
 		}
