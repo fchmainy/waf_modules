@@ -41,7 +41,7 @@ resource "bigip_ltm_policy" "multiple" {
 		action	{
 			asm			= true
 			enable			= true
-			policy			= var.default_policy
+			policy			= "/${var.partition}/${var.default_policy}"
 			request			= true
 		}
 	}
