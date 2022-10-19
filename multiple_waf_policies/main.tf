@@ -1,8 +1,8 @@
 resource "bigip_ltm_policy" "multiple" {
-    controls = ["asm"]
+    controls = ["asm", "forwarding"]
     name     = "/${var.partition}/${var.name}"
     requires = ["http"]
-    strategy = "first-match"
+    strategy = "best-match"
 
     dynamic "rule" {
 	for_each				= var.rules
