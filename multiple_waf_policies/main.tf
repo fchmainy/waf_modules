@@ -1,8 +1,8 @@
 resource "bigip_ltm_policy" "multiple" {
-    controls = ["asm", "forwarding"]
+    controls = ["asm","forwarding"]
     name     = "/${var.partition}/${var.name}"
     requires = ["http"]
-    strategy = "best-match"
+    strategy = "first-match"
 
     dynamic "rule" {
 	for_each				= var.rules
@@ -18,13 +18,13 @@ resource "bigip_ltm_policy" "multiple" {
 			request			= true
 			host			= rule.value.hostname == null ? false : true
 			http_host               = rule.value.hostname == null ? false : true
-                        http_uri                = rule.value.path == null ? false : true
+			http_uri		= rule.value.path == null ? false : true
 			path 			= rule.value.path == null ? false : true
-			values			= rule.value.hostname == null ? rule.value.hostname : rule.value.path
+			values			= rule.value.hostname != null ? rule.value.hostname : rule.value.path
 		}
 		action {
 			forward			= true
-			pool			= rule.value.pool_name
+			pool			= "${rule.value.pool_name}"
 			request			= true
 			select			= true
 			snat			= "automap"
