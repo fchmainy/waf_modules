@@ -26,12 +26,14 @@ resource "bigip_ltm_policy" "multiple" {
 			forward			= true
 			pool			= "${rule.value.pool_name}"
 			request			= true
+			connection		= false
 			select			= true
 			snat			= "automap"
 		}
 		action {
 			asm			= true
 			enable			= true
+			connection		= false
 			request			= true
 			policy			= "/${var.partition}/${rule.value.policy}"
 		}
@@ -42,6 +44,7 @@ resource "bigip_ltm_policy" "multiple" {
 		action	{
 			asm			= true
 			enable			= true
+			connection		= false
 			policy			= "/${var.partition}/${var.default_policy}"
 			request			= true
 		}
