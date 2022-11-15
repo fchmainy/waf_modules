@@ -43,7 +43,7 @@ resource "bigip_waf_policy" "app1_waf_v2" {
 
 ```terraform
 module "canary_app1" {
-  source = "github.com/fchmainy/waf_modules/canary_policy_header?ref=v1.0.1"
+  source = "github.com/fchmainy/waf_modules//canary_policy_header?ref=v1.0.6"
   providers = {
     bigip = bigip.prod
   }
@@ -53,5 +53,6 @@ module "canary_app1" {
   header_value	     = "earlyAdopter"
   new_waf_policy     = bigip_waf_policy.app1_waf_v2.name
   current_waf_policy = bigip_waf_policy.app1_waf_v1.name
+  depends_on         = [bigip_waf_policy.app1_waf_v1, bigip_waf_policy.app1_waf_v2]
 }
 ```
