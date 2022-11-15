@@ -11,6 +11,7 @@ resource "bigip_ltm_policy" "canary" {
             asm                  = true
             policy               = "/${var.partition}/${var.new_waf_policy}"
             request              = true
+            connection		     = false
         }
 
         condition {
@@ -34,7 +35,7 @@ resource "bigip_ltm_policy" "canary" {
             enable               = true
             policy               = "/${var.partition}/${var.current_waf_policy}"
             request              = true
-
+            connection		     = false
         }
     }
 }
