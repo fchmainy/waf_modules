@@ -1,3 +1,3 @@
 output "ltmPolicyName" {
-	value	= bigip_ltm_policy.multiple.name
+	value	= bigip_ltm_policy.canary.name
 }
